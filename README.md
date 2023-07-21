@@ -9,6 +9,15 @@
 
 ## How to use
 
+### Requirements
+- Node.js with a recent version like v18, verify version with node -v
+- IDE with TypeScript and FunC support like Visual Studio Code with the FunC plugin
+- Ton Keeper (Ton Wallet)
+### Install
+```
+npm create ton@latest 
+npm install
+```
 ### Build
 
 `npx blueprint build` or `yarn blueprint build`
