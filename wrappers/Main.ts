@@ -1,9 +1,11 @@
 import { Address, beginCell, Cell, Contract, contractAddress, ContractProvider, Sender, SendMode } from 'ton-core';
 
-export type MainConfig = {};
+export type MainConfig = {
+    n: number;
+};
 
 export function mainConfigToCell(config: MainConfig): Cell {
-    return beginCell().endCell();
+    return beginCell().storeUint(config.n,64).endCell();
 }
 
 export class Main implements Contract {
@@ -25,5 +27,10 @@ export class Main implements Contract {
             sendMode: SendMode.PAY_GAS_SEPARATELY,
             body: beginCell().endCell(),
         });
+    }
+
+    async getCurrentNValue(provider: ContractProvider) : Promise<number> {
+        const result = await provider.get('get_current_n_value',[]);
+        return result.stack.readNumber();
     }
 }
