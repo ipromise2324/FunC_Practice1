@@ -1,5 +1,5 @@
-# practice1
-
+# Practice1
+I have implemented a simple counter program using funC, which allows increasing the contract's counter N by sending a message.
 ## Project structure
 
 -   `contracts` - source code of all the smart contracts of the project and their dependencies.
