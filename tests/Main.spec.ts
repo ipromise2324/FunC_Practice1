@@ -17,7 +17,9 @@ describe('Main', () => {
     beforeEach(async () => {
         blockchain = await Blockchain.create();
 
-        main = blockchain.openContract(Main.createFromConfig({}, code));
+        main = blockchain.openContract(Main.createFromConfig({
+            n: 0
+        }, code));
 
         const deployer = await blockchain.treasury('deployer');
 
@@ -35,4 +37,34 @@ describe('Main', () => {
         // the check is done inside beforeEach
         // blockchain and main are ready to use
     });
+
+    it('should increment n value', async () => {
+        // Initial value of n
+        let nValue = await main.getCurrentNValue();
+        console.log('nValue', nValue);
+        // expect(nValue).toBe(0);
+    
+        // Increment n value
+        const incrementValue = Math.floor(Math.random() * 100);
+        const sender = await blockchain.treasury('sender');
+        const incrementResult = await main.sendIncrementNValue(sender.getSender(), {
+            value: toNano('0.05'), // You may need to adjust this value
+            incrementValue: incrementValue
+        });
+        
+        expect(incrementResult.transactions).toHaveTransaction({
+            from: sender.address,
+            to: main.address,
+            success: true,
+        });
+        nValue = await main.getCurrentNValue();
+        console.log('nValue', nValue);
+        // // Check the new value of n
+        // nValue = await main.getCurrentNValue();
+        // expect(nValue).toBe(incrementValue);
+    });
+    
+    
+
+    
 });
