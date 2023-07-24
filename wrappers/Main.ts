@@ -29,6 +29,22 @@ export class Main implements Contract {
         });
     }
 
+    async sendIncrementNValue(provider: ContractProvider, via: Sender,
+        opts: {
+            value: bigint,
+            incrementValue: number
+    }) {
+        // Create a cell with the increment value
+        const body = beginCell().storeUint(opts.incrementValue, 64).endCell();
+        console.log('opts.incrementValue', opts.incrementValue);
+        // Send the message to the contract
+        await provider.internal(via, {
+            value: opts.value,
+            sendMode: SendMode.PAY_GAS_SEPARATELY,
+            body: body,
+        });
+    }
+    
     async getCurrentNValue(provider: ContractProvider) : Promise<number> {
         const result = await provider.get('get_current_n_value',[]);
         return result.stack.readNumber();
