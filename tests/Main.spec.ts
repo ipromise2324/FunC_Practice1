@@ -59,9 +59,7 @@ describe('Main', () => {
         });
         nValue = await main.getCurrentNValue();
         console.log('nValue', nValue);
-        // // Check the new value of n
-        // nValue = await main.getCurrentNValue();
-        // expect(nValue).toBe(incrementValue);
+        expect(nValue).toBe(incrementValue);
     });
     
     
