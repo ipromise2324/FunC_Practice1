@@ -6,7 +6,7 @@ int load_data() inline {
     return ds~load_uint(64);
 }
 
-() save_data(int n) inline {
+() save_data(int n) impure {
     set_data(
         begin_cell()
             .store_uint(n, 64)
